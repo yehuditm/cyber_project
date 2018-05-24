@@ -1,30 +1,45 @@
-syntax = "proto3";
-package tutorial;
+syntax = "proto2";
+package final_project;
 
-import "google/protobuf/timestamp.proto";
 enum PhoneType 
 {
     MOBILE = 0;
     HOME = 1;
     WORK = 2;
-  }
-  
-message PhoneNumber 
-{
-	string number = 1;
-	PhoneType type = 2;
 }
 
-message Person 
+message TClientReq
 {
-  string name = 1;
-  int32 id = 2;  // Unique ID number for this person.
-  string email = 3;
-  repeated PhoneNumber phones = 4;
-  google.protobuf.Timestamp last_updated = 5;
+	required int32 id = 1;
+	required string name = 2;
 }
 
+message TClientRsp
+{
+	required int32 id = 1;
+	required string file_name = 2;
+	required string data = 3;
+}
 
-message AddressBook {
-  repeated Person people = 1;
+message TServerReq
+{
+	required int32 id = 1;
+	required PhoneType type = 2; 
+}
+
+message TServerRsp
+{
+	required int32 id = 1;	
+}
+
+message TData 
+{
+	oneof Msg
+	{
+		TClientReq clientReq = 1;
+		TClientRsp clientRsp = 2;
+		TServerReq serverReq = 3;
+		TServerRsp serverRsp = 4;
+	}	
+	
 }

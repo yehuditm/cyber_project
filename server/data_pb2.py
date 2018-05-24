@@ -14,20 +14,18 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='data.proto',
-  package='tutorial',
-  syntax='proto3',
-  serialized_pb=_b('\n\ndata.proto\x12\x08tutorial\x1a\x1fgoogle/protobuf/timestamp.proto\"@\n\x0bPhoneNumber\x12\x0e\n\x06number\x18\x01 \x01(\t\x12!\n\x04type\x18\x02 \x01(\x0e\x32\x13.tutorial.PhoneType\"\x8a\x01\n\x06Person\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12%\n\x06phones\x18\x04 \x03(\x0b\x32\x15.tutorial.PhoneNumber\x12\x30\n\x0clast_updated\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"/\n\x0b\x41\x64\x64ressBook\x12 \n\x06people\x18\x01 \x03(\x0b\x32\x10.tutorial.Person*+\n\tPhoneType\x12\n\n\x06MOBILE\x10\x00\x12\x08\n\x04HOME\x10\x01\x12\x08\n\x04WORK\x10\x02\x62\x06proto3')
-  ,
-  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
+  package='final_project',
+  syntax='proto2',
+  serialized_pb=_b('\n\ndata.proto\x12\rfinal_project\"&\n\nTClientReq\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x0c\n\x04name\x18\x02 \x02(\t\"9\n\nTClientRsp\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x11\n\tfile_name\x18\x02 \x02(\t\x12\x0c\n\x04\x64\x61ta\x18\x03 \x02(\t\"@\n\nTServerReq\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x04type\x18\x02 \x02(\x0e\x32\x18.final_project.PhoneType\"\x18\n\nTServerRsp\x12\n\n\x02id\x18\x01 \x02(\x05\"\xce\x01\n\x05TData\x12.\n\tclientReq\x18\x01 \x01(\x0b\x32\x19.final_project.TClientReqH\x00\x12.\n\tclientRsp\x18\x02 \x01(\x0b\x32\x19.final_project.TClientRspH\x00\x12.\n\tserverReq\x18\x03 \x01(\x0b\x32\x19.final_project.TServerReqH\x00\x12.\n\tserverRsp\x18\x04 \x01(\x0b\x32\x19.final_project.TServerRspH\x00\x42\x05\n\x03Msg*+\n\tPhoneType\x12\n\n\x06MOBILE\x10\x00\x12\x08\n\x04HOME\x10\x01\x12\x08\n\x04WORK\x10\x02')
+)
 
 _PHONETYPE = _descriptor.EnumDescriptor(
   name='PhoneType',
-  full_name='tutorial.PhoneType',
+  full_name='final_project.PhoneType',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -46,8 +44,8 @@ _PHONETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=313,
-  serialized_end=356,
+  serialized_start=429,
+  serialized_end=472,
 )
 _sym_db.RegisterEnumDescriptor(_PHONETYPE)
 
@@ -58,23 +56,106 @@ WORK = 2
 
 
 
-_PHONENUMBER = _descriptor.Descriptor(
-  name='PhoneNumber',
-  full_name='tutorial.PhoneNumber',
+_TCLIENTREQ = _descriptor.Descriptor(
+  name='TClientReq',
+  full_name='final_project.TClientReq',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='number', full_name='tutorial.PhoneNumber.number', index=0,
-      number=1, type=9, cpp_type=9, label=1,
+      name='id', full_name='final_project.TClientReq.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='final_project.TClientReq.name', index=1,
+      number=2, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=29,
+  serialized_end=67,
+)
+
+
+_TCLIENTRSP = _descriptor.Descriptor(
+  name='TClientRsp',
+  full_name='final_project.TClientRsp',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='final_project.TClientRsp.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='file_name', full_name='final_project.TClientRsp.file_name', index=1,
+      number=2, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='type', full_name='tutorial.PhoneNumber.type', index=1,
-      number=2, type=14, cpp_type=8, label=1,
+      name='data', full_name='final_project.TClientRsp.data', index=2,
+      number=3, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=69,
+  serialized_end=126,
+)
+
+
+_TSERVERREQ = _descriptor.Descriptor(
+  name='TServerReq',
+  full_name='final_project.TServerReq',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='final_project.TServerReq.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='final_project.TServerReq.type', index=1,
+      number=2, type=14, cpp_type=8, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -87,53 +168,77 @@ _PHONENUMBER = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
-  syntax='proto3',
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=57,
-  serialized_end=121,
+  serialized_start=128,
+  serialized_end=192,
 )
 
 
-_PERSON = _descriptor.Descriptor(
-  name='Person',
-  full_name='tutorial.Person',
+_TSERVERRSP = _descriptor.Descriptor(
+  name='TServerRsp',
+  full_name='final_project.TServerRsp',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='tutorial.Person.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='id', full_name='tutorial.Person.id', index=1,
-      number=2, type=5, cpp_type=1, label=1,
+      name='id', full_name='final_project.TServerRsp.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=194,
+  serialized_end=218,
+)
+
+
+_TDATA = _descriptor.Descriptor(
+  name='TData',
+  full_name='final_project.TData',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
     _descriptor.FieldDescriptor(
-      name='email', full_name='tutorial.Person.email', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      name='clientReq', full_name='final_project.TData.clientReq', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='phones', full_name='tutorial.Person.phones', index=3,
-      number=4, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      name='clientRsp', full_name='final_project.TData.clientRsp', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='last_updated', full_name='tutorial.Person.last_updated', index=4,
-      number=5, type=11, cpp_type=10, label=1,
+      name='serverReq', full_name='final_project.TData.serverReq', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='serverRsp', full_name='final_project.TData.serverRsp', index=3,
+      number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -146,75 +251,76 @@ _PERSON = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
-  syntax='proto3',
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='Msg', full_name='final_project.TData.Msg',
+      index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=124,
-  serialized_end=262,
+  serialized_start=221,
+  serialized_end=427,
 )
 
-
-_ADDRESSBOOK = _descriptor.Descriptor(
-  name='AddressBook',
-  full_name='tutorial.AddressBook',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='people', full_name='tutorial.AddressBook.people', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=264,
-  serialized_end=311,
-)
-
-_PHONENUMBER.fields_by_name['type'].enum_type = _PHONETYPE
-_PERSON.fields_by_name['phones'].message_type = _PHONENUMBER
-_PERSON.fields_by_name['last_updated'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_ADDRESSBOOK.fields_by_name['people'].message_type = _PERSON
-DESCRIPTOR.message_types_by_name['PhoneNumber'] = _PHONENUMBER
-DESCRIPTOR.message_types_by_name['Person'] = _PERSON
-DESCRIPTOR.message_types_by_name['AddressBook'] = _ADDRESSBOOK
+_TSERVERREQ.fields_by_name['type'].enum_type = _PHONETYPE
+_TDATA.fields_by_name['clientReq'].message_type = _TCLIENTREQ
+_TDATA.fields_by_name['clientRsp'].message_type = _TCLIENTRSP
+_TDATA.fields_by_name['serverReq'].message_type = _TSERVERREQ
+_TDATA.fields_by_name['serverRsp'].message_type = _TSERVERRSP
+_TDATA.oneofs_by_name['Msg'].fields.append(
+  _TDATA.fields_by_name['clientReq'])
+_TDATA.fields_by_name['clientReq'].containing_oneof = _TDATA.oneofs_by_name['Msg']
+_TDATA.oneofs_by_name['Msg'].fields.append(
+  _TDATA.fields_by_name['clientRsp'])
+_TDATA.fields_by_name['clientRsp'].containing_oneof = _TDATA.oneofs_by_name['Msg']
+_TDATA.oneofs_by_name['Msg'].fields.append(
+  _TDATA.fields_by_name['serverReq'])
+_TDATA.fields_by_name['serverReq'].containing_oneof = _TDATA.oneofs_by_name['Msg']
+_TDATA.oneofs_by_name['Msg'].fields.append(
+  _TDATA.fields_by_name['serverRsp'])
+_TDATA.fields_by_name['serverRsp'].containing_oneof = _TDATA.oneofs_by_name['Msg']
+DESCRIPTOR.message_types_by_name['TClientReq'] = _TCLIENTREQ
+DESCRIPTOR.message_types_by_name['TClientRsp'] = _TCLIENTRSP
+DESCRIPTOR.message_types_by_name['TServerReq'] = _TSERVERREQ
+DESCRIPTOR.message_types_by_name['TServerRsp'] = _TSERVERRSP
+DESCRIPTOR.message_types_by_name['TData'] = _TDATA
 DESCRIPTOR.enum_types_by_name['PhoneType'] = _PHONETYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-PhoneNumber = _reflection.GeneratedProtocolMessageType('PhoneNumber', (_message.Message,), dict(
-  DESCRIPTOR = _PHONENUMBER,
+TClientReq = _reflection.GeneratedProtocolMessageType('TClientReq', (_message.Message,), dict(
+  DESCRIPTOR = _TCLIENTREQ,
   __module__ = 'data_pb2'
-  # @@protoc_insertion_point(class_scope:tutorial.PhoneNumber)
+  # @@protoc_insertion_point(class_scope:final_project.TClientReq)
   ))
-_sym_db.RegisterMessage(PhoneNumber)
+_sym_db.RegisterMessage(TClientReq)
 
-Person = _reflection.GeneratedProtocolMessageType('Person', (_message.Message,), dict(
-  DESCRIPTOR = _PERSON,
+TClientRsp = _reflection.GeneratedProtocolMessageType('TClientRsp', (_message.Message,), dict(
+  DESCRIPTOR = _TCLIENTRSP,
   __module__ = 'data_pb2'
-  # @@protoc_insertion_point(class_scope:tutorial.Person)
+  # @@protoc_insertion_point(class_scope:final_project.TClientRsp)
   ))
-_sym_db.RegisterMessage(Person)
+_sym_db.RegisterMessage(TClientRsp)
 
-AddressBook = _reflection.GeneratedProtocolMessageType('AddressBook', (_message.Message,), dict(
-  DESCRIPTOR = _ADDRESSBOOK,
+TServerReq = _reflection.GeneratedProtocolMessageType('TServerReq', (_message.Message,), dict(
+  DESCRIPTOR = _TSERVERREQ,
   __module__ = 'data_pb2'
-  # @@protoc_insertion_point(class_scope:tutorial.AddressBook)
+  # @@protoc_insertion_point(class_scope:final_project.TServerReq)
   ))
-_sym_db.RegisterMessage(AddressBook)
+_sym_db.RegisterMessage(TServerReq)
+
+TServerRsp = _reflection.GeneratedProtocolMessageType('TServerRsp', (_message.Message,), dict(
+  DESCRIPTOR = _TSERVERRSP,
+  __module__ = 'data_pb2'
+  # @@protoc_insertion_point(class_scope:final_project.TServerRsp)
+  ))
+_sym_db.RegisterMessage(TServerRsp)
+
+TData = _reflection.GeneratedProtocolMessageType('TData', (_message.Message,), dict(
+  DESCRIPTOR = _TDATA,
+  __module__ = 'data_pb2'
+  # @@protoc_insertion_point(class_scope:final_project.TData)
+  ))
+_sym_db.RegisterMessage(TData)
 
 
 # @@protoc_insertion_point(module_scope)
