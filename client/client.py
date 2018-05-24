@@ -7,6 +7,8 @@ import select
 import msvcrt
 import sys
 
+import data_pb2
+
 SERVER_ADDRESS = "localhost"
 PORT = 8081
 MAX_SIZE_RESPONSE = 1024
@@ -35,7 +37,10 @@ def main():
                 sys.stdout.write(char)
                 sys.stdout.flush()
                 if char == chr(CHAR_ENTER):
-                    my_socket.send(msg)
+                    m_data = data_pb2.TClientReq()
+                    m_data.name = msg
+                    m_data.id = 10
+                    my_socket.send(m_data.SerializeToString())
                     msg = ''
                     sys.stdout.write('\n')
 
@@ -47,7 +52,11 @@ def main():
                     my_socket.close()
                     print "Connection with server closed."
                     return
-                print '\r[from server] ', data
+                m_data = data_pb2.TClientReq()
+                m_data.ParseFromString(data)
+                print '\r[from server] name:', m_data.name
+                print '\n'
+                print  'id:',m_data.id
                 if msg != '':
                     sys.stdout.write('[Me] ' + msg)
                     sys.stdout.flush()
