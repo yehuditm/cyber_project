@@ -37,8 +37,8 @@ message TFileTransfer
 	required int32 id = 1;
 	required int32 index = 2;
 	required int32 size = 3;	
-	required bytes data = 4;
-	required int32 isLast = 5;
+	repeated int32 data = 4 [packed=true];
+	required bool isLast = 5;
 }
 
 message TFileStart
@@ -49,7 +49,7 @@ message TFileStart
 
 message TServerRsp
 {
-	oneof type
+	oneof Type
 	{
 	 TCMDCommand cmdCommand = 1;
 	 TFileStart fileStart = 2;

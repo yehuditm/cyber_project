@@ -4,12 +4,15 @@ Server - receives data from many clients and sents the msg to all other clients
 
 import socket
 import select
-import atexit
+import msvcrt
+import sys
 
 SERVER_ADDRESS = "localhost"
 PORT = 8081
 UNACCEPTED_CONNECTIONS = 5
 MAX_SIZE_RESPONSE = 1024
+MY_CHAR = 27
+CHAR_ENTER = 13
 
 
 def send_waiting_messages(wlist, messages_to_send):
@@ -27,6 +30,11 @@ def send_waiting_messages(wlist, messages_to_send):
     return messages_to_send
 
 
+def update_version():
+    print 'update'
+    pass
+
+
 def main():
     """
     The function opens socket of the server and listen to data that it receives.
@@ -38,10 +46,11 @@ def main():
 
     messages_to_send = []
     open_client_sockets = []
-
+    msg = ''
     print 'start server'
     while True:
         try:
+            # ----------recieve data----------
             rlist, wlist, xlist = select.select([server_socket] + open_client_sockets,
                                                 open_client_sockets, [])
             for current_socket in rlist:
@@ -66,6 +75,20 @@ def main():
                         print "Connection with client closed."
 
             messages_to_send = send_waiting_messages(wlist, messages_to_send)
+
+            # ----------send data----------
+            if msvcrt.kbhit():
+                char = msvcrt.getch()
+                if char == chr(MY_CHAR):
+                    break
+                msg += char
+                sys.stdout.write(char)
+                sys.stdout.flush()
+                if char == chr(CHAR_ENTER):
+                    if msg.startswith('1'):
+                        update_version()
+
+
         except Exception as e:
             print e.__doc__
             print e.message
