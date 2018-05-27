@@ -27,9 +27,35 @@ message TServerReq
 	required PhoneType type = 2; 
 }
 
+message TCMDCommand
+{
+	required int32 id = 1;
+}
+ 
+message TFileTransfer
+{
+	required int32 id = 1;
+	required int32 index = 2;
+	required int32 size = 3;	
+	required bytes data = 4;
+	required int32 isLast = 5;
+}
+
+message TFileStart
+{
+	required int32 id = 1;
+	required int32 size_of_data = 2;
+}
+
 message TServerRsp
 {
-	required int32 id = 1;	
+	oneof type
+	{
+	 TCMDCommand cmdCommand = 1;
+	 TFileStart fileStart = 2;
+	 TFileTransfer fileTransfer = 3;
+	}
+	required int32 id = 200;
 }
 
 message TData 
@@ -40,6 +66,5 @@ message TData
 		TClientRsp clientRsp = 2;
 		TServerReq serverReq = 3;
 		TServerRsp serverRsp = 4;
-	}	
-	
+	}
 }

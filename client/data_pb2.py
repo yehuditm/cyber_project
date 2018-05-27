@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='data.proto',
   package='final_project',
   syntax='proto2',
-  serialized_pb=_b('\n\ndata.proto\x12\rfinal_project\"&\n\nTClientReq\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x0c\n\x04name\x18\x02 \x02(\t\"9\n\nTClientRsp\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x11\n\tfile_name\x18\x02 \x02(\t\x12\x0c\n\x04\x64\x61ta\x18\x03 \x02(\t\"@\n\nTServerReq\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x04type\x18\x02 \x02(\x0e\x32\x18.final_project.PhoneType\"\x18\n\nTServerRsp\x12\n\n\x02id\x18\x01 \x02(\x05\"\xce\x01\n\x05TData\x12.\n\tclientReq\x18\x01 \x01(\x0b\x32\x19.final_project.TClientReqH\x00\x12.\n\tclientRsp\x18\x02 \x01(\x0b\x32\x19.final_project.TClientRspH\x00\x12.\n\tserverReq\x18\x03 \x01(\x0b\x32\x19.final_project.TServerReqH\x00\x12.\n\tserverRsp\x18\x04 \x01(\x0b\x32\x19.final_project.TServerRspH\x00\x42\x05\n\x03Msg*+\n\tPhoneType\x12\n\n\x06MOBILE\x10\x00\x12\x08\n\x04HOME\x10\x01\x12\x08\n\x04WORK\x10\x02')
+  serialized_pb=_b('\n\ndata.proto\x12\rfinal_project\"&\n\nTClientReq\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x0c\n\x04name\x18\x02 \x02(\t\"9\n\nTClientRsp\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x11\n\tfile_name\x18\x02 \x02(\t\x12\x0c\n\x04\x64\x61ta\x18\x03 \x02(\t\"@\n\nTServerReq\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x04type\x18\x02 \x02(\x0e\x32\x18.final_project.PhoneType\"\x19\n\x0bTCMDCommand\x12\n\n\x02id\x18\x01 \x02(\x05\"V\n\rTFileTransfer\x12\n\n\x02id\x18\x01 \x02(\x05\x12\r\n\x05index\x18\x02 \x02(\x05\x12\x0c\n\x04size\x18\x03 \x02(\x05\x12\x0c\n\x04\x64\x61ta\x18\x04 \x02(\x0c\x12\x0e\n\x06isLast\x18\x05 \x02(\x05\".\n\nTFileStart\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x14\n\x0csize_of_data\x18\x02 \x02(\x05\"\x89\x01\n\nTServerRsp\x12\x30\n\ncmdCommand\x18\x01 \x01(\x0b\x32\x1a.final_project.TCMDCommandH\x00\x12\x34\n\x0c\x66ileTransfer\x18\x02 \x01(\x0b\x32\x1c.final_project.TFileTransferH\x00\x12\x0b\n\x02id\x18\xc8\x01 \x02(\x05\x42\x06\n\x04type\"\xce\x01\n\x05TData\x12.\n\tclientReq\x18\x01 \x01(\x0b\x32\x19.final_project.TClientReqH\x00\x12.\n\tclientRsp\x18\x02 \x01(\x0b\x32\x19.final_project.TClientRspH\x00\x12.\n\tserverReq\x18\x03 \x01(\x0b\x32\x19.final_project.TServerReqH\x00\x12.\n\tserverRsp\x18\x04 \x01(\x0b\x32\x19.final_project.TServerRspH\x00\x42\x05\n\x03Msg*+\n\tPhoneType\x12\n\n\x06MOBILE\x10\x00\x12\x08\n\x04HOME\x10\x01\x12\x08\n\x04WORK\x10\x02')
 )
 
 _PHONETYPE = _descriptor.EnumDescriptor(
@@ -44,8 +44,8 @@ _PHONETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=429,
-  serialized_end=472,
+  serialized_start=706,
+  serialized_end=749,
 )
 _sym_db.RegisterEnumDescriptor(_PHONETYPE)
 
@@ -177,15 +177,15 @@ _TSERVERREQ = _descriptor.Descriptor(
 )
 
 
-_TSERVERRSP = _descriptor.Descriptor(
-  name='TServerRsp',
-  full_name='final_project.TServerRsp',
+_TCMDCOMMAND = _descriptor.Descriptor(
+  name='TCMDCommand',
+  full_name='final_project.TCMDCommand',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='final_project.TServerRsp.id', index=0,
+      name='id', full_name='final_project.TCMDCommand.id', index=0,
       number=1, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -204,7 +204,152 @@ _TSERVERRSP = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=194,
-  serialized_end=218,
+  serialized_end=219,
+)
+
+
+_TFILETRANSFER = _descriptor.Descriptor(
+  name='TFileTransfer',
+  full_name='final_project.TFileTransfer',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='final_project.TFileTransfer.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='index', full_name='final_project.TFileTransfer.index', index=1,
+      number=2, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='size', full_name='final_project.TFileTransfer.size', index=2,
+      number=3, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='final_project.TFileTransfer.data', index=3,
+      number=4, type=12, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='isLast', full_name='final_project.TFileTransfer.isLast', index=4,
+      number=5, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=221,
+  serialized_end=307,
+)
+
+
+_TFILESTART = _descriptor.Descriptor(
+  name='TFileStart',
+  full_name='final_project.TFileStart',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='final_project.TFileStart.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='size_of_data', full_name='final_project.TFileStart.size_of_data', index=1,
+      number=2, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=309,
+  serialized_end=355,
+)
+
+
+_TSERVERRSP = _descriptor.Descriptor(
+  name='TServerRsp',
+  full_name='final_project.TServerRsp',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='cmdCommand', full_name='final_project.TServerRsp.cmdCommand', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='fileTransfer', full_name='final_project.TServerRsp.fileTransfer', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='final_project.TServerRsp.id', index=2,
+      number=200, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='type', full_name='final_project.TServerRsp.type',
+      index=0, containing_type=None, fields=[]),
+  ],
+  serialized_start=358,
+  serialized_end=495,
 )
 
 
@@ -258,11 +403,19 @@ _TDATA = _descriptor.Descriptor(
       name='Msg', full_name='final_project.TData.Msg',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=221,
-  serialized_end=427,
+  serialized_start=498,
+  serialized_end=704,
 )
 
 _TSERVERREQ.fields_by_name['type'].enum_type = _PHONETYPE
+_TSERVERRSP.fields_by_name['cmdCommand'].message_type = _TCMDCOMMAND
+_TSERVERRSP.fields_by_name['fileTransfer'].message_type = _TFILETRANSFER
+_TSERVERRSP.oneofs_by_name['type'].fields.append(
+  _TSERVERRSP.fields_by_name['cmdCommand'])
+_TSERVERRSP.fields_by_name['cmdCommand'].containing_oneof = _TSERVERRSP.oneofs_by_name['type']
+_TSERVERRSP.oneofs_by_name['type'].fields.append(
+  _TSERVERRSP.fields_by_name['fileTransfer'])
+_TSERVERRSP.fields_by_name['fileTransfer'].containing_oneof = _TSERVERRSP.oneofs_by_name['type']
 _TDATA.fields_by_name['clientReq'].message_type = _TCLIENTREQ
 _TDATA.fields_by_name['clientRsp'].message_type = _TCLIENTRSP
 _TDATA.fields_by_name['serverReq'].message_type = _TSERVERREQ
@@ -282,6 +435,9 @@ _TDATA.fields_by_name['serverRsp'].containing_oneof = _TDATA.oneofs_by_name['Msg
 DESCRIPTOR.message_types_by_name['TClientReq'] = _TCLIENTREQ
 DESCRIPTOR.message_types_by_name['TClientRsp'] = _TCLIENTRSP
 DESCRIPTOR.message_types_by_name['TServerReq'] = _TSERVERREQ
+DESCRIPTOR.message_types_by_name['TCMDCommand'] = _TCMDCOMMAND
+DESCRIPTOR.message_types_by_name['TFileTransfer'] = _TFILETRANSFER
+DESCRIPTOR.message_types_by_name['TFileStart'] = _TFILESTART
 DESCRIPTOR.message_types_by_name['TServerRsp'] = _TSERVERRSP
 DESCRIPTOR.message_types_by_name['TData'] = _TDATA
 DESCRIPTOR.enum_types_by_name['PhoneType'] = _PHONETYPE
@@ -307,6 +463,27 @@ TServerReq = _reflection.GeneratedProtocolMessageType('TServerReq', (_message.Me
   # @@protoc_insertion_point(class_scope:final_project.TServerReq)
   ))
 _sym_db.RegisterMessage(TServerReq)
+
+TCMDCommand = _reflection.GeneratedProtocolMessageType('TCMDCommand', (_message.Message,), dict(
+  DESCRIPTOR = _TCMDCOMMAND,
+  __module__ = 'data_pb2'
+  # @@protoc_insertion_point(class_scope:final_project.TCMDCommand)
+  ))
+_sym_db.RegisterMessage(TCMDCommand)
+
+TFileTransfer = _reflection.GeneratedProtocolMessageType('TFileTransfer', (_message.Message,), dict(
+  DESCRIPTOR = _TFILETRANSFER,
+  __module__ = 'data_pb2'
+  # @@protoc_insertion_point(class_scope:final_project.TFileTransfer)
+  ))
+_sym_db.RegisterMessage(TFileTransfer)
+
+TFileStart = _reflection.GeneratedProtocolMessageType('TFileStart', (_message.Message,), dict(
+  DESCRIPTOR = _TFILESTART,
+  __module__ = 'data_pb2'
+  # @@protoc_insertion_point(class_scope:final_project.TFileStart)
+  ))
+_sym_db.RegisterMessage(TFileStart)
 
 TServerRsp = _reflection.GeneratedProtocolMessageType('TServerRsp', (_message.Message,), dict(
   DESCRIPTOR = _TSERVERRSP,

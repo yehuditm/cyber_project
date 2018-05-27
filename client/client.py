@@ -6,7 +6,6 @@ import socket
 import select
 import msvcrt
 import sys
-
 import data_pb2
 
 SERVER_ADDRESS = "localhost"
@@ -14,6 +13,9 @@ PORT = 8081
 MAX_SIZE_RESPONSE = 1024
 MY_CHAR = 27
 CHAR_ENTER = 13
+
+def handle_request(data):
+    pass
 
 
 def main():
@@ -37,10 +39,11 @@ def main():
                 sys.stdout.write(char)
                 sys.stdout.flush()
                 if char == chr(CHAR_ENTER):
-                    m_data = data_pb2.TClientReq()
-                    m_data.name = msg
-                    m_data.id = 10
-                    my_socket.send(m_data.SerializeToString())
+                    d= data_pb2.TData()
+                    if d.WhichOneof("Msg") is None:
+                        d.clientReq.name =msg
+                        d.clientReq.id = 10
+                        my_socket.send(d.SerializeToString())
                     msg = ''
                     sys.stdout.write('\n')
 
@@ -52,11 +55,12 @@ def main():
                     my_socket.close()
                     print "Connection with server closed."
                     return
-                m_data = data_pb2.TClientReq()
-                m_data.ParseFromString(data)
-                print '\r[from server] name:', m_data.name
-                print '\n'
-                print  'id:',m_data.id
+                d=data_pb2.TData()
+                d.ParseFromString(data)
+                if d.WhichOneof("Msg") == "clientReq":
+                    print '\r[from server] name:', d.clientReq.name
+                    print  'id:',d.clientReq.id
+
                 if msg != '':
                     sys.stdout.write('[Me] ' + msg)
                     sys.stdout.flush()
