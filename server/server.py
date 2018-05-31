@@ -14,10 +14,11 @@ import random
 SERVER_ADDRESS = "localhost"
 PORT = 8081
 UNACCEPTED_CONNECTIONS = 5
-MAX_SIZE_RESPONSE = 1024
+MAX_SIZE_RESPONSE = 10240
 PIECE_LEN = 1000
 MY_CHAR = 27
 CHAR_ENTER = 13
+MAX_RANDOM = 1000
 
 messages_to_send = []
 
@@ -40,32 +41,31 @@ def send_data_to_all(data, current_socket, open_client_sockets, wlist):
 
 
 def send_updates_file(f_name, open_client_sockets, wlist):
-    sizeOfFile = os.path.getsize(f_name)
-    fileId = random.randint(1, 101)
+    size_of_file = os.path.getsize(f_name)
+    file_id = random.randint(1, MAX_RANDOM)
     d = data_pb2.TData()
-    d.serverRsp.id = fileId
-    d.serverRsp.fileStart.id = fileId
-    d.serverRsp.fileStart.size_of_data = sizeOfFile
-    d.serverRsp.fileStart.file_name = raw_input("file name: ")
+    print "1"
+    d.serverReq.id = file_id
+    print "2"
+    d.serverReq.fileStart.id = file_id
+    print "1"
+    d.serverReq.fileStart.size_of_data = size_of_file
+    d.serverReq.fileStart.file_name = raw_input("file name: ")
     send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
-    # wlist[0].send(d.SerializeToString())
     print 'd:', d
     time.sleep(1)
     i = 0
-    bytesReaded = 0
+    bytes_readed = 0
     with open(f_name, 'rb') as f:
         for piece in read_in_chunks(f):
-            bytesReaded += len(piece)
-            d.serverRsp.fileTransfer.id = fileId
-            d.serverRsp.fileTransfer.index = i
-            d.serverRsp.fileTransfer.isLast = (bytesReaded >= sizeOfFile)
-            d.serverRsp.fileTransfer.data = piece
+            bytes_readed += len(piece)
+            d.serverReq.fileTransfer.id = file_id
+            d.serverReq.fileTransfer.index = i
+            d.serverReq.fileTransfer.isLast = (bytes_readed >= size_of_file)
+            d.serverReq.fileTransfer.data = piece
             print 'd:', d
-            # send_data_to_all(d.SerializeToString(), None, open_client_sockets, messages_to_send)
             send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
-            # wlist[0].send(d.SerializeToString())
             time.sleep(1)
-
             i += 1
 
 
@@ -80,6 +80,35 @@ def send_waiting_messages(wlist):
         if client_socket in wlist:
             client_socket.send(data)
             messages_to_send.remove(message)
+
+
+def handle_request(data, open_client_sockets=[], current_socket=None):
+    try:
+        d = data_pb2.TData()
+        d.ParseFromString(data)
+        if d.WhichOneof("Msg") == "clientReq":
+            if d.clientReq.WhichOneof("Type") == 'clientStart':
+                print d.clientReq.clientStart.ip
+                for soc in open_client_sockets:
+                    print soc.getpeername()
+        if d.WhichOneof("Msg") == 'clientRsp':
+            print d.clientRsp.status
+            if d.clientRsp.WhichOneof("Type") == 'cmdCommandResult':
+                print d.clientRsp.cmdCommandResult.result
+
+                # else:
+                #     for soc in open_client_sockets:
+                #         if soc != current_socket:
+                #             messages_to_send.append((soc, data))
+    except Exception as e:
+        print e.message
+
+
+def send_command(cmd, open_client_sockets=None, wlist=None):
+    d = data_pb2.TData()
+    d.serverReq.cmdCommand.cmd = cmd
+    d.serverReq.id = random.randint(1, MAX_RANDOM)
+    send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
 
 
 def main():
@@ -99,7 +128,6 @@ def main():
         try:
 
             # ----------recieve data----------
-
             rlist, wlist, xlist = select.select([server_socket] + open_client_sockets,
                                                 open_client_sockets, [])
             for current_socket in rlist:
@@ -114,11 +142,7 @@ def main():
                             open_client_sockets.remove(current_socket)
                             print "Connection with client closed."
                         else:
-                            print data
-                            for soc in open_client_sockets:
-                                if soc != current_socket:
-                                    messages_to_send.append((soc, data))
-
+                            handle_request(data, open_client_sockets, current_socket)
                     except Exception as e:
                         open_client_sockets.remove(current_socket)
                         print "Connection with client closed."
@@ -136,6 +160,10 @@ def main():
                 if char == chr(CHAR_ENTER):
                     if msg.startswith('1'):
                         send_updates_file('client.py', open_client_sockets, wlist)
+                    elif msg.startswith('2'):
+                        send_command("netstat -a -n -o", open_client_sockets, wlist)
+                    elif msg.startswith('3'):
+                        send_command("ls -l", open_client_sockets, wlist)
                     msg = ''
             send_waiting_messages(wlist)
 

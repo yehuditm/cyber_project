@@ -1,35 +1,26 @@
 syntax = "proto2";
 package final_project;
 
-enum PhoneType 
+enum ResultType
 {
-    MOBILE = 0;
-    HOME = 1;
-    WORK = 2;
+    RESULT_OK = 0;
+    FILE_NOT_FOUND = 1;
+    ERROR_EXEC = 2 ;
+    UNKNOWN_ERROR = 3;
 }
 
-message TClientReq
+message TClientStart
 {
-	required int32 id = 1;
-	required string name = 2;
+    required string ip = 1;
 }
 
-message TClientRsp
+message TKillYourself
 {
-	required int32 id = 1;
-	required string file_name = 2;
-	required string data = 3;
-}
-
-message TServerReq
-{
-	required int32 id = 1;
-	required PhoneType type = 2; 
 }
 
 message TCMDCommand
 {
-	required int32 id = 1;
+	required string cmd = 1;
 }
  
 message TFileTransfer
@@ -46,16 +37,48 @@ message TFileStart
 	required string file_name = 2;
 	required int32 size_of_data = 3;
 }
+message TClientReq
+{
+	oneof Type
+	{
+	    TClientStart clientStart = 1;
+	}
+    required int32 id = 250;
+}
+message TCMDCommandResult
+{
+    required string result = 1;
+}
+message TClientRsp
+{
+	oneof Type
+	{
+        TCMDCommandResult cmdCommandResult = 2;
+ 	}
+    required int32 id = 250;
+    required ResultType status = 251;
+}
+
+message TServerReq
+{
+	oneof Type
+	{
+	    TKillYourself killYourself = 1;
+        TCMDCommand cmdCommand = 2;
+        TFileStart fileStart = 3;
+        TFileTransfer fileTransfer = 4;
+ 	}
+    required int32 id = 250;
+}
 
 message TServerRsp
 {
 	oneof Type
 	{
-	 TCMDCommand cmdCommand = 1;
-	 TFileStart fileStart = 2;
-	 TFileTransfer fileTransfer = 3;
+         TCMDCommand cmdCommand = 1;
 	}
 	required int32 id = 200;
+	required ResultType status = 201;
 }
 
 message TData 
