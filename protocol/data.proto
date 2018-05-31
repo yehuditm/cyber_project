@@ -36,15 +36,15 @@ message TFileTransfer
 {
 	required int32 id = 1;
 	required int32 index = 2;
-	required int32 size = 3;	
-	repeated int32 data = 4 [packed=true];
-	required bool isLast = 5;
+    required bool isLast = 3;
+	required bytes data = 4;
 }
 
 message TFileStart
 {
 	required int32 id = 1;
-	required int32 size_of_data = 2;
+	required string file_name = 2;
+	required int32 size_of_data = 3;
 }
 
 message TServerRsp
