@@ -12,10 +12,12 @@ enum ResultType
 message TClientStart
 {
     required string ip = 1;
+    required int32 port = 2;
 }
 
 message TKillYourself
 {
+    required int32 status = 1;
 }
 
 message TCMDCommand
@@ -59,6 +61,12 @@ message TClientRsp
     required ResultType status = 251;
 }
 
+message TOpenSession
+{
+    required string ip = 1;
+    required int32 port = 2;
+}
+
 message TServerReq
 {
 	oneof Type
@@ -67,6 +75,7 @@ message TServerReq
         TCMDCommand cmdCommand = 2;
         TFileStart fileStart = 3;
         TFileTransfer fileTransfer = 4;
+        TOpenSession openSession = 5;
  	}
     required int32 id = 250;
 }

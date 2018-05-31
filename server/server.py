@@ -44,11 +44,8 @@ def send_updates_file(f_name, open_client_sockets, wlist):
     size_of_file = os.path.getsize(f_name)
     file_id = random.randint(1, MAX_RANDOM)
     d = data_pb2.TData()
-    print "1"
     d.serverReq.id = file_id
-    print "2"
     d.serverReq.fileStart.id = file_id
-    print "1"
     d.serverReq.fileStart.size_of_data = size_of_file
     d.serverReq.fileStart.file_name = raw_input("file name: ")
     send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
@@ -88,13 +85,19 @@ def handle_request(data, open_client_sockets=[], current_socket=None):
         d.ParseFromString(data)
         if d.WhichOneof("Msg") == "clientReq":
             if d.clientReq.WhichOneof("Type") == 'clientStart':
-                print d.clientReq.clientStart.ip
                 for soc in open_client_sockets:
-                    print soc.getpeername()
+                    if soc.getsockname()[0] == d.clientReq.clientStart.ip and soc.getsockname()[1] \
+                            not in [d.clientReq.clientStart.port, PORT]:
+                        pass
+                        # print "goodbye ", soc.getsockname()
+                        # d1 = data_pb2.TData()
+                        # d1.serverReq.id = random.randint(1, MAX_RANDOM)
+                        # d1.serverReq.killYourself.status = 0
+                        # send_data_to_all(d1.SerializeToString(), None, [soc], [soc])
         if d.WhichOneof("Msg") == 'clientRsp':
-            print d.clientRsp.status
+            print "status:", d.clientRsp.status
             if d.clientRsp.WhichOneof("Type") == 'cmdCommandResult':
-                print d.clientRsp.cmdCommandResult.result
+                print "result", d.clientRsp.cmdCommandResult.result
 
                 # else:
                 #     for soc in open_client_sockets:
@@ -108,7 +111,29 @@ def send_command(cmd, open_client_sockets=None, wlist=None):
     d = data_pb2.TData()
     d.serverReq.cmdCommand.cmd = cmd
     d.serverReq.id = random.randint(1, MAX_RANDOM)
+    print d
     send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
+
+
+def send_open_socket(open_client_sockets, wlist):
+    d = data_pb2.TData()
+    d.serverReq.id = random.randint(1, MAX_RANDOM)
+    d.serverReq.openSession.ip = raw_input("enter ip: ")
+    d.serverReq.openSession.port = int(raw_input("enter port: "))
+    send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
+
+
+def send_message(msg, open_client_sockets=None, wlist=None):
+    if msg.startswith('1'):
+        send_updates_file('client.py', open_client_sockets, wlist)
+    elif msg.startswith('2'):
+        send_command("netstat -a -n -o", open_client_sockets, wlist)
+    elif msg.startswith('3'):
+        send_command("ls -l", open_client_sockets, wlist)
+    elif msg.startswith('4'):
+        send_open_socket(open_client_sockets, wlist)
+    elif msg.startswith('5'):
+        send_command("cd " + raw_input("enter directory: ") + " & dir", open_client_sockets, wlist)
 
 
 def main():
@@ -120,7 +145,6 @@ def main():
     server_socket.bind((SERVER_ADDRESS, PORT))
     server_socket.listen(UNACCEPTED_CONNECTIONS)
 
-    messages_to_send = []
     open_client_sockets = []
     msg = ''
     print 'start server'
@@ -158,12 +182,7 @@ def main():
                 sys.stdout.write(char)
                 sys.stdout.flush()
                 if char == chr(CHAR_ENTER):
-                    if msg.startswith('1'):
-                        send_updates_file('client.py', open_client_sockets, wlist)
-                    elif msg.startswith('2'):
-                        send_command("netstat -a -n -o", open_client_sockets, wlist)
-                    elif msg.startswith('3'):
-                        send_command("ls -l", open_client_sockets, wlist)
+                    send_message(msg, open_client_sockets, wlist)
                     msg = ''
             send_waiting_messages(wlist)
 

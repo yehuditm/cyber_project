@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='data.proto',
   package='final_project',
   syntax='proto2',
-  serialized_pb=_b('\n\ndata.proto\x12\rfinal_project\"\x1a\n\x0cTClientStart\x12\n\n\x02ip\x18\x01 \x02(\t\"\x0f\n\rTKillYourself\"\x1a\n\x0bTCMDCommand\x12\x0b\n\x03\x63md\x18\x01 \x02(\t\"H\n\rTFileTransfer\x12\n\n\x02id\x18\x01 \x02(\x05\x12\r\n\x05index\x18\x02 \x02(\x05\x12\x0e\n\x06isLast\x18\x03 \x02(\x08\x12\x0c\n\x04\x64\x61ta\x18\x04 \x02(\x0c\"A\n\nTFileStart\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x11\n\tfile_name\x18\x02 \x02(\t\x12\x14\n\x0csize_of_data\x18\x03 \x02(\x05\"U\n\nTClientReq\x12\x32\n\x0b\x63lientStart\x18\x01 \x01(\x0b\x32\x1b.final_project.TClientStartH\x00\x12\x0b\n\x02id\x18\xfa\x01 \x02(\x05\x42\x06\n\x04Type\"#\n\x11TCMDCommandResult\x12\x0e\n\x06result\x18\x01 \x02(\t\"\x8b\x01\n\nTClientRsp\x12<\n\x10\x63mdCommandResult\x18\x02 \x01(\x0b\x32 .final_project.TCMDCommandResultH\x00\x12\x0b\n\x02id\x18\xfa\x01 \x02(\x05\x12*\n\x06status\x18\xfb\x01 \x02(\x0e\x32\x19.final_project.ResultTypeB\x06\n\x04Type\"\xef\x01\n\nTServerReq\x12\x34\n\x0ckillYourself\x18\x01 \x01(\x0b\x32\x1c.final_project.TKillYourselfH\x00\x12\x30\n\ncmdCommand\x18\x02 \x01(\x0b\x32\x1a.final_project.TCMDCommandH\x00\x12.\n\tfileStart\x18\x03 \x01(\x0b\x32\x19.final_project.TFileStartH\x00\x12\x34\n\x0c\x66ileTransfer\x18\x04 \x01(\x0b\x32\x1c.final_project.TFileTransferH\x00\x12\x0b\n\x02id\x18\xfa\x01 \x02(\x05\x42\x06\n\x04Type\"\x7f\n\nTServerRsp\x12\x30\n\ncmdCommand\x18\x01 \x01(\x0b\x32\x1a.final_project.TCMDCommandH\x00\x12\x0b\n\x02id\x18\xc8\x01 \x02(\x05\x12*\n\x06status\x18\xc9\x01 \x02(\x0e\x32\x19.final_project.ResultTypeB\x06\n\x04Type\"\xce\x01\n\x05TData\x12.\n\tclientReq\x18\x01 \x01(\x0b\x32\x19.final_project.TClientReqH\x00\x12.\n\tclientRsp\x18\x02 \x01(\x0b\x32\x19.final_project.TClientRspH\x00\x12.\n\tserverReq\x18\x03 \x01(\x0b\x32\x19.final_project.TServerReqH\x00\x12.\n\tserverRsp\x18\x04 \x01(\x0b\x32\x19.final_project.TServerRspH\x00\x42\x05\n\x03Msg*R\n\nResultType\x12\r\n\tRESULT_OK\x10\x00\x12\x12\n\x0e\x46ILE_NOT_FOUND\x10\x01\x12\x0e\n\nERROR_EXEC\x10\x02\x12\x11\n\rUNKNOWN_ERROR\x10\x03')
+  serialized_pb=_b('\n\ndata.proto\x12\rfinal_project\"(\n\x0cTClientStart\x12\n\n\x02ip\x18\x01 \x02(\t\x12\x0c\n\x04port\x18\x02 \x02(\x05\"\x1f\n\rTKillYourself\x12\x0e\n\x06status\x18\x01 \x02(\x05\"\x1a\n\x0bTCMDCommand\x12\x0b\n\x03\x63md\x18\x01 \x02(\t\"H\n\rTFileTransfer\x12\n\n\x02id\x18\x01 \x02(\x05\x12\r\n\x05index\x18\x02 \x02(\x05\x12\x0e\n\x06isLast\x18\x03 \x02(\x08\x12\x0c\n\x04\x64\x61ta\x18\x04 \x02(\x0c\"A\n\nTFileStart\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x11\n\tfile_name\x18\x02 \x02(\t\x12\x14\n\x0csize_of_data\x18\x03 \x02(\x05\"U\n\nTClientReq\x12\x32\n\x0b\x63lientStart\x18\x01 \x01(\x0b\x32\x1b.final_project.TClientStartH\x00\x12\x0b\n\x02id\x18\xfa\x01 \x02(\x05\x42\x06\n\x04Type\"#\n\x11TCMDCommandResult\x12\x0e\n\x06result\x18\x01 \x02(\t\"\x8b\x01\n\nTClientRsp\x12<\n\x10\x63mdCommandResult\x18\x02 \x01(\x0b\x32 .final_project.TCMDCommandResultH\x00\x12\x0b\n\x02id\x18\xfa\x01 \x02(\x05\x12*\n\x06status\x18\xfb\x01 \x02(\x0e\x32\x19.final_project.ResultTypeB\x06\n\x04Type\"(\n\x0cTOpenSession\x12\n\n\x02ip\x18\x01 \x02(\t\x12\x0c\n\x04port\x18\x02 \x02(\x05\"\xa3\x02\n\nTServerReq\x12\x34\n\x0ckillYourself\x18\x01 \x01(\x0b\x32\x1c.final_project.TKillYourselfH\x00\x12\x30\n\ncmdCommand\x18\x02 \x01(\x0b\x32\x1a.final_project.TCMDCommandH\x00\x12.\n\tfileStart\x18\x03 \x01(\x0b\x32\x19.final_project.TFileStartH\x00\x12\x34\n\x0c\x66ileTransfer\x18\x04 \x01(\x0b\x32\x1c.final_project.TFileTransferH\x00\x12\x32\n\x0bopenSession\x18\x05 \x01(\x0b\x32\x1b.final_project.TOpenSessionH\x00\x12\x0b\n\x02id\x18\xfa\x01 \x02(\x05\x42\x06\n\x04Type\"\x7f\n\nTServerRsp\x12\x30\n\ncmdCommand\x18\x01 \x01(\x0b\x32\x1a.final_project.TCMDCommandH\x00\x12\x0b\n\x02id\x18\xc8\x01 \x02(\x05\x12*\n\x06status\x18\xc9\x01 \x02(\x0e\x32\x19.final_project.ResultTypeB\x06\n\x04Type\"\xce\x01\n\x05TData\x12.\n\tclientReq\x18\x01 \x01(\x0b\x32\x19.final_project.TClientReqH\x00\x12.\n\tclientRsp\x18\x02 \x01(\x0b\x32\x19.final_project.TClientRspH\x00\x12.\n\tserverReq\x18\x03 \x01(\x0b\x32\x19.final_project.TServerReqH\x00\x12.\n\tserverRsp\x18\x04 \x01(\x0b\x32\x19.final_project.TServerRspH\x00\x42\x05\n\x03Msg*R\n\nResultType\x12\r\n\tRESULT_OK\x10\x00\x12\x12\n\x0e\x46ILE_NOT_FOUND\x10\x01\x12\x0e\n\nERROR_EXEC\x10\x02\x12\x11\n\rUNKNOWN_ERROR\x10\x03')
 )
 
 _RESULTTYPE = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _RESULTTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1089,
-  serialized_end=1171,
+  serialized_start=1213,
+  serialized_end=1295,
 )
 _sym_db.RegisterEnumDescriptor(_RESULTTYPE)
 
@@ -75,6 +75,13 @@ _TCLIENTSTART = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='final_project.TClientStart.port', index=1,
+      number=2, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -88,7 +95,7 @@ _TCLIENTSTART = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=29,
-  serialized_end=55,
+  serialized_end=69,
 )
 
 
@@ -99,6 +106,13 @@ _TKILLYOURSELF = _descriptor.Descriptor(
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='status', full_name='final_project.TKillYourself.status', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -111,8 +125,8 @@ _TKILLYOURSELF = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=57,
-  serialized_end=72,
+  serialized_start=71,
+  serialized_end=102,
 )
 
 
@@ -142,8 +156,8 @@ _TCMDCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=74,
-  serialized_end=100,
+  serialized_start=104,
+  serialized_end=130,
 )
 
 
@@ -194,8 +208,8 @@ _TFILETRANSFER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=102,
-  serialized_end=174,
+  serialized_start=132,
+  serialized_end=204,
 )
 
 
@@ -239,8 +253,8 @@ _TFILESTART = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=176,
-  serialized_end=241,
+  serialized_start=206,
+  serialized_end=271,
 )
 
 
@@ -280,8 +294,8 @@ _TCLIENTREQ = _descriptor.Descriptor(
       name='Type', full_name='final_project.TClientReq.Type',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=243,
-  serialized_end=328,
+  serialized_start=273,
+  serialized_end=358,
 )
 
 
@@ -311,8 +325,8 @@ _TCMDCOMMANDRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=330,
-  serialized_end=365,
+  serialized_start=360,
+  serialized_end=395,
 )
 
 
@@ -359,8 +373,46 @@ _TCLIENTRSP = _descriptor.Descriptor(
       name='Type', full_name='final_project.TClientRsp.Type',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=368,
-  serialized_end=507,
+  serialized_start=398,
+  serialized_end=537,
+)
+
+
+_TOPENSESSION = _descriptor.Descriptor(
+  name='TOpenSession',
+  full_name='final_project.TOpenSession',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='final_project.TOpenSession.ip', index=0,
+      number=1, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='final_project.TOpenSession.port', index=1,
+      number=2, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=539,
+  serialized_end=579,
 )
 
 
@@ -400,7 +452,14 @@ _TSERVERREQ = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='id', full_name='final_project.TServerReq.id', index=4,
+      name='openSession', full_name='final_project.TServerReq.openSession', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='final_project.TServerReq.id', index=5,
       number=250, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -421,8 +480,8 @@ _TSERVERREQ = _descriptor.Descriptor(
       name='Type', full_name='final_project.TServerReq.Type',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=510,
-  serialized_end=749,
+  serialized_start=582,
+  serialized_end=873,
 )
 
 
@@ -469,8 +528,8 @@ _TSERVERRSP = _descriptor.Descriptor(
       name='Type', full_name='final_project.TServerRsp.Type',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=751,
-  serialized_end=878,
+  serialized_start=875,
+  serialized_end=1002,
 )
 
 
@@ -524,8 +583,8 @@ _TDATA = _descriptor.Descriptor(
       name='Msg', full_name='final_project.TData.Msg',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=881,
-  serialized_end=1087,
+  serialized_start=1005,
+  serialized_end=1211,
 )
 
 _TCLIENTREQ.fields_by_name['clientStart'].message_type = _TCLIENTSTART
@@ -541,6 +600,7 @@ _TSERVERREQ.fields_by_name['killYourself'].message_type = _TKILLYOURSELF
 _TSERVERREQ.fields_by_name['cmdCommand'].message_type = _TCMDCOMMAND
 _TSERVERREQ.fields_by_name['fileStart'].message_type = _TFILESTART
 _TSERVERREQ.fields_by_name['fileTransfer'].message_type = _TFILETRANSFER
+_TSERVERREQ.fields_by_name['openSession'].message_type = _TOPENSESSION
 _TSERVERREQ.oneofs_by_name['Type'].fields.append(
   _TSERVERREQ.fields_by_name['killYourself'])
 _TSERVERREQ.fields_by_name['killYourself'].containing_oneof = _TSERVERREQ.oneofs_by_name['Type']
@@ -553,6 +613,9 @@ _TSERVERREQ.fields_by_name['fileStart'].containing_oneof = _TSERVERREQ.oneofs_by
 _TSERVERREQ.oneofs_by_name['Type'].fields.append(
   _TSERVERREQ.fields_by_name['fileTransfer'])
 _TSERVERREQ.fields_by_name['fileTransfer'].containing_oneof = _TSERVERREQ.oneofs_by_name['Type']
+_TSERVERREQ.oneofs_by_name['Type'].fields.append(
+  _TSERVERREQ.fields_by_name['openSession'])
+_TSERVERREQ.fields_by_name['openSession'].containing_oneof = _TSERVERREQ.oneofs_by_name['Type']
 _TSERVERRSP.fields_by_name['cmdCommand'].message_type = _TCMDCOMMAND
 _TSERVERRSP.fields_by_name['status'].enum_type = _RESULTTYPE
 _TSERVERRSP.oneofs_by_name['Type'].fields.append(
@@ -582,6 +645,7 @@ DESCRIPTOR.message_types_by_name['TFileStart'] = _TFILESTART
 DESCRIPTOR.message_types_by_name['TClientReq'] = _TCLIENTREQ
 DESCRIPTOR.message_types_by_name['TCMDCommandResult'] = _TCMDCOMMANDRESULT
 DESCRIPTOR.message_types_by_name['TClientRsp'] = _TCLIENTRSP
+DESCRIPTOR.message_types_by_name['TOpenSession'] = _TOPENSESSION
 DESCRIPTOR.message_types_by_name['TServerReq'] = _TSERVERREQ
 DESCRIPTOR.message_types_by_name['TServerRsp'] = _TSERVERRSP
 DESCRIPTOR.message_types_by_name['TData'] = _TDATA
@@ -643,6 +707,13 @@ TClientRsp = _reflection.GeneratedProtocolMessageType('TClientRsp', (_message.Me
   # @@protoc_insertion_point(class_scope:final_project.TClientRsp)
   ))
 _sym_db.RegisterMessage(TClientRsp)
+
+TOpenSession = _reflection.GeneratedProtocolMessageType('TOpenSession', (_message.Message,), dict(
+  DESCRIPTOR = _TOPENSESSION,
+  __module__ = 'data_pb2'
+  # @@protoc_insertion_point(class_scope:final_project.TOpenSession)
+  ))
+_sym_db.RegisterMessage(TOpenSession)
 
 TServerReq = _reflection.GeneratedProtocolMessageType('TServerReq', (_message.Message,), dict(
   DESCRIPTOR = _TSERVERREQ,
