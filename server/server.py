@@ -47,7 +47,7 @@ def send_updates_file(f_name, open_client_sockets, wlist):
     d.serverReq.id = file_id
     d.serverReq.fileStart.id = file_id
     d.serverReq.fileStart.size_of_data = size_of_file
-    d.serverReq.fileStart.file_name = raw_input("file name: ")
+    d.serverReq.fileStart.file_name = raw_input("file name (for client): ")
     send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
     print 'd:', d
     time.sleep(1)
@@ -120,31 +120,37 @@ def send_open_socket(open_client_sockets, wlist):
 
 
 def send_message(msg, open_client_sockets=None, wlist=None):
+    if msg.startswith('help'):
+        print_options()
     if msg.startswith('1'):
-        print "update version"
         send_updates_file('client.py', open_client_sockets, wlist)
     elif msg.startswith('2'):
-        print "netstat"
         send_command("netstat -a -n -o", open_client_sockets, wlist)
     elif msg.startswith('3'):
-        print "ls -- error"
         send_command("ls -l", open_client_sockets, wlist)
     elif msg.startswith('4'):
-        print "open new socket"
         send_open_socket(open_client_sockets, wlist)
     elif msg.startswith('5'):
-        print "dir"
         send_command("cd " + raw_input("enter directory: ") + " & dir", open_client_sockets, wlist)
     elif msg.startswith('6'):
-        print "move"
-        send_command("move " + raw_input("enter src_file: ")+" " + raw_input("enter dst_file: "), open_client_sockets,
+        send_command("move " + raw_input("enter src_file: ") + " " + raw_input("enter dst_file: "), open_client_sockets,
                      wlist)
     elif msg.startswith('7'):
-        print "hidden"
         send_command("attrib +h " + raw_input("enter file path & name: "), open_client_sockets, wlist)
     elif msg.startswith('8'):
-        print "remove"
-        send_command("del " + raw_input("enter file path & name: ") , open_client_sockets, wlist)
+        send_command("del " + raw_input("enter file path & name: "), open_client_sockets, wlist)
+
+
+def print_options():
+    print '''choose a number:
+     1: update version
+     2: netstat
+     3: ls -- error
+     4: open new socket
+     5: dir
+     6: move
+     7: hidden
+     8: remove'''
 
 
 def main():
@@ -159,9 +165,9 @@ def main():
     open_client_sockets = []
     msg = ''
     print 'start server'
+    print_options()
     while True:
         try:
-
             # ----------recieve data----------
             rlist, wlist, xlist = select.select([server_socket] + open_client_sockets,
                                                 open_client_sockets, [])
@@ -179,6 +185,7 @@ def main():
                             print "Connection with client closed."
                         else:
                             handle_request(data, open_client_sockets, current_socket)
+
                     except Exception as e:
                         open_client_sockets.remove(current_socket)
                         print "Connection with client closed."
