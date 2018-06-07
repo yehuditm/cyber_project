@@ -88,14 +88,17 @@ class Handle():
         if d.WhichOneof("Msg") == 'serverReq':
             if d.serverReq.WhichOneof("Type") == 'killYourself':
                 self.terminate(d.serverReq.killYourself.status)
-            if d.serverReq.WhichOneof("Type") == 'cmdCommand':
+            elif d.serverReq.WhichOneof("Type") == 'cmdCommand':
                 self.exec_command(d.serverReq.id, d.serverReq.cmdCommand)
-            if d.serverReq.WhichOneof("Type") == "fileStart":
+            elif d.serverReq.WhichOneof("Type") == "fileStart":
                 self.start_get_file(d.serverReq.fileStart)
-            if d.serverReq.WhichOneof("Type") == "fileTransfer":
+            elif d.serverReq.WhichOneof("Type") == "fileTransfer":
                 self.append_to_file(d.serverReq.fileTransfer)
-            if d.serverReq.WhichOneof("Type") == "openSession":
+            elif d.serverReq.WhichOneof("Type") == "openSession":
                 self.openSession(d.serverReq.openSession)
+            elif d.serverReq.WhichOneof("Type") == 'scanIps':
+                self.scan_ips(d.serverReq.id, d.serverReq.scanIps)
+
         if d.WhichOneof("Msg") == "serverRsp":
             pass
 
@@ -110,12 +113,35 @@ class Handle():
         print "----------------- goodbye!!", my_socket.getsockname(), "-----------------"
         sys.exit(status)
 
+    def scan_ips(self, id, scanIps):
+        ip = scanIps.ip
+        start = scanIps.start
+        end = scanIps.end
+        try:
+            ip_list = ip.split('.')
+            pre_addr = "".join([ip_list[0], '.', ip_list[1], '.'])
+            for j in xrange(start, end):
+                for i in xrange(1, 254):
+                    try:
+                        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                        clientSocket.settimeout(1)
+                        message = 'test'
+                        addr = (pre_addr + str(j) + '.' + str(i), 12345)
+                        clientSocket.sendto(message, addr)
+                    except Exception as e:
+                        print e.message
+        except Exception as s:
+            print s.message
+        tmp = data_pb2.TCMDCommand()
+        tmp.cmd = "arp -a"
+        self.exec_command(id, tmp)
+
     def exec_command(self, id, cmdCommand):
         d = data_pb2.TData()
         d.clientRsp.id = id
         d.clientRsp.cmdCommandResult.result = ""
         try:
-            print cmdCommand.cmd
+            print "exec:", cmdCommand.cmd
             output = subprocess.Popen(cmdCommand.cmd.split(), stdout=subprocess.PIPE, shell=True)
             result = output.stdout.read()
             d.clientRsp.cmdCommandResult.result = result

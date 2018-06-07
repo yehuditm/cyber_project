@@ -67,6 +67,13 @@ message TOpenSession
     required int32 port = 2;
 }
 
+message TScanIps
+{
+    required string ip = 1;
+    required int32 start = 2;
+    required int32 end = 3;
+}
+
 message TServerReq
 {
 	oneof Type
@@ -76,6 +83,7 @@ message TServerReq
         TFileStart fileStart = 3;
         TFileTransfer fileTransfer = 4;
         TOpenSession openSession = 5;
+        TScanIps scanIps = 6;
  	}
     required int32 id = 250;
 }
